@@ -1,0 +1,17 @@
+#cloud-config
+package_update: true
+package_upgrade: false
+packages:
+  - python3
+  - openssh-server
+
+runcmd:
+  - hostnamectl set-hostname ${hostname}
+  - |
+    cat >/etc/hosts <<'EOF'
+    127.0.0.1 localhost
+    ${control_ip} control.example.com control
+    ${node1_ip} node1.example.com node1
+    ${node2_ip} node2.example.com node2
+    EOF
+  - systemctl restart ssh || true

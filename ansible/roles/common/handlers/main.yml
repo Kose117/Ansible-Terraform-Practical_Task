@@ -1,0 +1,15 @@
+
+---
+
+- name: reboot server
+
+  reboot:
+
+    msg: "Rebooting server after SELinux configuration change"
+
+    reboot_timeout: 300
+
+  become: yes
+
+  when: skip_reboot is not defined or not skip_reboot
+
