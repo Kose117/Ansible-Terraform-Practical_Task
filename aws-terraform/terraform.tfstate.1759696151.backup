@@ -1,0 +1,1424 @@
+{
+  "version": 4,
+  "terraform_version": "1.13.3",
+  "serial": 26,
+  "lineage": "a166f00d-9f21-b6e3-8370-660ec4cc5cd0",
+  "outputs": {
+    "control_public_ip": {
+      "value": "18.234.203.131",
+      "type": "string"
+    },
+    "control_ssh": {
+      "value": "ssh -i ./.generated/lab_key.pem ubuntu@18.234.203.131",
+      "type": "string"
+    },
+    "node1_from_control": {
+      "value": "ssh node1",
+      "type": "string"
+    },
+    "node2_from_control": {
+      "value": "ssh node2",
+      "type": "string"
+    },
+    "nodes_private_ips": {
+      "value": {
+        "node1": "10.0.2.11",
+        "node2": "10.0.2.12"
+      },
+      "type": [
+        "object",
+        {
+          "node1": "string",
+          "node2": "string"
+        }
+      ]
+    }
+  },
+  "resources": [
+    {
+      "module": "module.compute",
+      "mode": "data",
+      "type": "aws_ami",
+      "name": "ubuntu_2204",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "allow_unsafe_filter": null,
+            "architecture": "x86_64",
+            "arn": "arn:aws:ec2:us-east-1::image/ami-07a3add10195338ad",
+            "block_device_mappings": [
+              {
+                "device_name": "/dev/sda1",
+                "ebs": {
+                  "delete_on_termination": "true",
+                  "encrypted": "false",
+                  "iops": "0",
+                  "snapshot_id": "snap-00f414d0be0188761",
+                  "throughput": "0",
+                  "volume_initialization_rate": "0",
+                  "volume_size": "8",
+                  "volume_type": "gp2"
+                },
+                "no_device": "",
+                "virtual_name": ""
+              },
+              {
+                "device_name": "/dev/sdb",
+                "ebs": {},
+                "no_device": "",
+                "virtual_name": "ephemeral0"
+              },
+              {
+                "device_name": "/dev/sdc",
+                "ebs": {},
+                "no_device": "",
+                "virtual_name": "ephemeral1"
+              }
+            ],
+            "boot_mode": "uefi-preferred",
+            "creation_date": "2025-10-01T06:46:53.000Z",
+            "deprecation_time": "2027-10-01T06:46:53.000Z",
+            "description": "Canonical, Ubuntu, 22.04, amd64 jammy image",
+            "ena_support": true,
+            "executable_users": null,
+            "filter": [
+              {
+                "name": "name",
+                "values": [
+                  "ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"
+                ]
+              },
+              {
+                "name": "virtualization-type",
+                "values": [
+                  "hvm"
+                ]
+              }
+            ],
+            "hypervisor": "xen",
+            "id": "ami-07a3add10195338ad",
+            "image_id": "ami-07a3add10195338ad",
+            "image_location": "amazon/ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-20251001",
+            "image_owner_alias": "amazon",
+            "image_type": "machine",
+            "imds_support": "",
+            "include_deprecated": false,
+            "kernel_id": "",
+            "last_launched_time": "",
+            "most_recent": true,
+            "name": "ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-20251001",
+            "name_regex": null,
+            "owner_id": "099720109477",
+            "owners": [
+              "099720109477"
+            ],
+            "platform": "",
+            "platform_details": "Linux/UNIX",
+            "product_codes": [],
+            "public": true,
+            "ramdisk_id": "",
+            "region": "us-east-1",
+            "root_device_name": "/dev/sda1",
+            "root_device_type": "ebs",
+            "root_snapshot_id": "snap-00f414d0be0188761",
+            "sriov_net_support": "simple",
+            "state": "available",
+            "state_reason": {
+              "code": "UNSET",
+              "message": "UNSET"
+            },
+            "tags": {},
+            "timeouts": null,
+            "tpm_support": "",
+            "uefi_data": null,
+            "usage_operation": "RunInstances",
+            "virtualization_type": "hvm"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "module": "module.compute",
+      "mode": "managed",
+      "type": "aws_instance",
+      "name": "control",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 2,
+          "attributes": {
+            "ami": "ami-07a3add10195338ad",
+            "arn": "arn:aws:ec2:us-east-1:930816732860:instance/i-048cc744f91aca39c",
+            "associate_public_ip_address": true,
+            "availability_zone": "us-east-1a",
+            "capacity_reservation_specification": [
+              {
+                "capacity_reservation_preference": "open",
+                "capacity_reservation_target": []
+              }
+            ],
+            "cpu_options": [
+              {
+                "amd_sev_snp": "",
+                "core_count": 1,
+                "threads_per_core": 2
+              }
+            ],
+            "credit_specification": [
+              {
+                "cpu_credits": "unlimited"
+              }
+            ],
+            "disable_api_stop": false,
+            "disable_api_termination": false,
+            "ebs_block_device": [],
+            "ebs_optimized": false,
+            "enable_primary_ipv6": null,
+            "enclave_options": [
+              {
+                "enabled": false
+              }
+            ],
+            "ephemeral_block_device": [],
+            "force_destroy": false,
+            "get_password_data": false,
+            "hibernation": false,
+            "host_id": "",
+            "host_resource_group_arn": null,
+            "iam_instance_profile": "",
+            "id": "i-048cc744f91aca39c",
+            "instance_initiated_shutdown_behavior": "stop",
+            "instance_lifecycle": "",
+            "instance_market_options": [],
+            "instance_state": "running",
+            "instance_type": "t3.micro",
+            "ipv6_address_count": 0,
+            "ipv6_addresses": [],
+            "key_name": "ansible-lab-key",
+            "launch_template": [],
+            "maintenance_options": [
+              {
+                "auto_recovery": "default"
+              }
+            ],
+            "metadata_options": [
+              {
+                "http_endpoint": "enabled",
+                "http_protocol_ipv6": "disabled",
+                "http_put_response_hop_limit": 1,
+                "http_tokens": "optional",
+                "instance_metadata_tags": "disabled"
+              }
+            ],
+            "monitoring": false,
+            "network_interface": [],
+            "outpost_arn": "",
+            "password_data": "",
+            "placement_group": "",
+            "placement_group_id": "",
+            "placement_partition_number": 0,
+            "primary_network_interface": [
+              {
+                "delete_on_termination": true,
+                "network_interface_id": "eni-03d5ab6ab739fe1ba"
+              }
+            ],
+            "primary_network_interface_id": "eni-03d5ab6ab739fe1ba",
+            "private_dns": "ip-10-0-1-10.ec2.internal",
+            "private_dns_name_options": [
+              {
+                "enable_resource_name_dns_a_record": false,
+                "enable_resource_name_dns_aaaa_record": false,
+                "hostname_type": "ip-name"
+              }
+            ],
+            "private_ip": "10.0.1.10",
+            "public_dns": "ec2-18-234-203-131.compute-1.amazonaws.com",
+            "public_ip": "18.234.203.131",
+            "region": "us-east-1",
+            "root_block_device": [
+              {
+                "delete_on_termination": true,
+                "device_name": "/dev/sda1",
+                "encrypted": false,
+                "iops": 3000,
+                "kms_key_id": "",
+                "tags": {},
+                "tags_all": {},
+                "throughput": 125,
+                "volume_id": "vol-09cb92578a68e98ff",
+                "volume_size": 10,
+                "volume_type": "gp3"
+              }
+            ],
+            "secondary_private_ips": [],
+            "security_groups": [],
+            "source_dest_check": true,
+            "spot_instance_request_id": "",
+            "subnet_id": "subnet-024354ab821c5e508",
+            "tags": {
+              "Env": "dev",
+              "Name": "control.example.com",
+              "Owner": "jose",
+              "Project": "ansible-lab",
+              "Role": "control"
+            },
+            "tags_all": {
+              "Env": "dev",
+              "Name": "control.example.com",
+              "Owner": "jose",
+              "Project": "ansible-lab",
+              "Role": "control"
+            },
+            "tenancy": "default",
+            "timeouts": null,
+            "user_data": "#cloud-config\npackage_update: true\npackage_upgrade: false\npackages:\n  - python3\n  - python3-venv\n  - openssh-client\n\nruncmd:\n  - hostnamectl set-hostname control.example.com\n  - |\n    cat \u003e/etc/hosts \u003c\u003c'EOF'\n    127.0.0.1 localhost\n    10.0.1.10 control.example.com control\n    10.0.2.11 node1.example.com node1\n    10.0.2.12 node2.example.com node2\n    EOF\n  - mkdir -p /home/ubuntu/.ssh\n  - chown ubuntu:ubuntu /home/ubuntu/.ssh\n  - chmod 700 /home/ubuntu/.ssh\n  - |\n    cat \u003e/home/ubuntu/.ssh/config \u003c\u003c'EOF'\n    Host node*\n      StrictHostKeyChecking no\n      UserKnownHostsFile /dev/null\n      User ubuntu\n      IdentityFile /home/ubuntu/.ssh/id_ed25519\n    EOF\n  - chown ubuntu:ubuntu /home/ubuntu/.ssh/config\n  - chmod 600 /home/ubuntu/.ssh/config\n  - |\n    cat \u003e/home/ubuntu/.ssh/id_ed25519 \u003c\u003c'EOF'\n    -----BEGIN PRIVATE KEY-----\nMC4CAQAwBQYDK2VwBCIEIBUk/drKhAr4Cvb7Dfs0xkZSshkJcvshrkpI/jh602vB\n-----END PRIVATE KEY-----\n\n    EOF\n  - chown ubuntu:ubuntu /home/ubuntu/.ssh/id_ed25519\n  - chmod 600 /home/ubuntu/.ssh/id_ed25519\n  - systemctl restart ssh || true\n",
+            "user_data_base64": null,
+            "user_data_replace_on_change": false,
+            "volume_tags": null,
+            "vpc_security_group_ids": [
+              "sg-0a68c482b847bd915"
+            ]
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "user_data"
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "930816732860",
+            "id": "i-048cc744f91aca39c",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTIwMDAwMDAwMDAwMCwicmVhZCI6OTAwMDAwMDAwMDAwLCJ1cGRhdGUiOjYwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMiJ9",
+          "dependencies": [
+            "module.compute.aws_key_pair.lab_key",
+            "module.compute.data.aws_ami.ubuntu_2204",
+            "module.compute.tls_private_key.lab_key",
+            "module.network.aws_security_group.sg_control",
+            "module.network.aws_subnet.public_a",
+            "module.network.aws_vpc.lab"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.compute",
+      "mode": "managed",
+      "type": "aws_instance",
+      "name": "nodes",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": "node1",
+          "schema_version": 2,
+          "attributes": {
+            "ami": "ami-07a3add10195338ad",
+            "arn": "arn:aws:ec2:us-east-1:930816732860:instance/i-032a4ae06c780cf26",
+            "associate_public_ip_address": false,
+            "availability_zone": "us-east-1a",
+            "capacity_reservation_specification": [
+              {
+                "capacity_reservation_preference": "open",
+                "capacity_reservation_target": []
+              }
+            ],
+            "cpu_options": [
+              {
+                "amd_sev_snp": "",
+                "core_count": 1,
+                "threads_per_core": 2
+              }
+            ],
+            "credit_specification": [
+              {
+                "cpu_credits": "unlimited"
+              }
+            ],
+            "disable_api_stop": false,
+            "disable_api_termination": false,
+            "ebs_block_device": [],
+            "ebs_optimized": false,
+            "enable_primary_ipv6": null,
+            "enclave_options": [
+              {
+                "enabled": false
+              }
+            ],
+            "ephemeral_block_device": [],
+            "force_destroy": false,
+            "get_password_data": false,
+            "hibernation": false,
+            "host_id": "",
+            "host_resource_group_arn": null,
+            "iam_instance_profile": "",
+            "id": "i-032a4ae06c780cf26",
+            "instance_initiated_shutdown_behavior": "stop",
+            "instance_lifecycle": "",
+            "instance_market_options": [],
+            "instance_state": "running",
+            "instance_type": "t3.micro",
+            "ipv6_address_count": 0,
+            "ipv6_addresses": [],
+            "key_name": "ansible-lab-key",
+            "launch_template": [],
+            "maintenance_options": [
+              {
+                "auto_recovery": "default"
+              }
+            ],
+            "metadata_options": [
+              {
+                "http_endpoint": "enabled",
+                "http_protocol_ipv6": "disabled",
+                "http_put_response_hop_limit": 1,
+                "http_tokens": "optional",
+                "instance_metadata_tags": "disabled"
+              }
+            ],
+            "monitoring": false,
+            "network_interface": [],
+            "outpost_arn": "",
+            "password_data": "",
+            "placement_group": "",
+            "placement_group_id": "",
+            "placement_partition_number": 0,
+            "primary_network_interface": [
+              {
+                "delete_on_termination": true,
+                "network_interface_id": "eni-07e70fd5b19bf2691"
+              }
+            ],
+            "primary_network_interface_id": "eni-07e70fd5b19bf2691",
+            "private_dns": "ip-10-0-2-11.ec2.internal",
+            "private_dns_name_options": [
+              {
+                "enable_resource_name_dns_a_record": false,
+                "enable_resource_name_dns_aaaa_record": false,
+                "hostname_type": "ip-name"
+              }
+            ],
+            "private_ip": "10.0.2.11",
+            "public_dns": "",
+            "public_ip": "",
+            "region": "us-east-1",
+            "root_block_device": [
+              {
+                "delete_on_termination": true,
+                "device_name": "/dev/sda1",
+                "encrypted": false,
+                "iops": 3000,
+                "kms_key_id": "",
+                "tags": {},
+                "tags_all": {},
+                "throughput": 125,
+                "volume_id": "vol-02439dfcd1434da5b",
+                "volume_size": 10,
+                "volume_type": "gp3"
+              }
+            ],
+            "secondary_private_ips": [],
+            "security_groups": [],
+            "source_dest_check": true,
+            "spot_instance_request_id": "",
+            "subnet_id": "subnet-0046fe4cef6a023ad",
+            "tags": {
+              "Env": "dev",
+              "Name": "node1.example.com",
+              "Owner": "jose",
+              "Project": "ansible-lab",
+              "Role": "node"
+            },
+            "tags_all": {
+              "Env": "dev",
+              "Name": "node1.example.com",
+              "Owner": "jose",
+              "Project": "ansible-lab",
+              "Role": "node"
+            },
+            "tenancy": "default",
+            "timeouts": null,
+            "user_data": "#cloud-config\npackage_update: true\npackage_upgrade: false\npackages:\n  - python3\n  - openssh-server\n\nruncmd:\n  - hostnamectl set-hostname node1.example.com\n  - |\n    cat \u003e/etc/hosts \u003c\u003c'EOF'\n    127.0.0.1 localhost\n    10.0.1.10 control.example.com control\n    10.0.2.11 node1.example.com node1\n    10.0.2.12 node2.example.com node2\n    EOF\n  - systemctl restart ssh || true\n",
+            "user_data_base64": null,
+            "user_data_replace_on_change": false,
+            "volume_tags": null,
+            "vpc_security_group_ids": [
+              "sg-0e985d49618fe13c5"
+            ]
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "930816732860",
+            "id": "i-032a4ae06c780cf26",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTIwMDAwMDAwMDAwMCwicmVhZCI6OTAwMDAwMDAwMDAwLCJ1cGRhdGUiOjYwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMiJ9",
+          "dependencies": [
+            "module.compute.aws_key_pair.lab_key",
+            "module.compute.data.aws_ami.ubuntu_2204",
+            "module.compute.tls_private_key.lab_key",
+            "module.network.aws_security_group.sg_control",
+            "module.network.aws_security_group.sg_nodes",
+            "module.network.aws_subnet.private_a",
+            "module.network.aws_vpc.lab"
+          ]
+        },
+        {
+          "index_key": "node2",
+          "schema_version": 2,
+          "attributes": {
+            "ami": "ami-07a3add10195338ad",
+            "arn": "arn:aws:ec2:us-east-1:930816732860:instance/i-0b96f517dbaa9ffb6",
+            "associate_public_ip_address": false,
+            "availability_zone": "us-east-1a",
+            "capacity_reservation_specification": [
+              {
+                "capacity_reservation_preference": "open",
+                "capacity_reservation_target": []
+              }
+            ],
+            "cpu_options": [
+              {
+                "amd_sev_snp": "",
+                "core_count": 1,
+                "threads_per_core": 2
+              }
+            ],
+            "credit_specification": [
+              {
+                "cpu_credits": "unlimited"
+              }
+            ],
+            "disable_api_stop": false,
+            "disable_api_termination": false,
+            "ebs_block_device": [],
+            "ebs_optimized": false,
+            "enable_primary_ipv6": null,
+            "enclave_options": [
+              {
+                "enabled": false
+              }
+            ],
+            "ephemeral_block_device": [],
+            "force_destroy": false,
+            "get_password_data": false,
+            "hibernation": false,
+            "host_id": "",
+            "host_resource_group_arn": null,
+            "iam_instance_profile": "",
+            "id": "i-0b96f517dbaa9ffb6",
+            "instance_initiated_shutdown_behavior": "stop",
+            "instance_lifecycle": "",
+            "instance_market_options": [],
+            "instance_state": "running",
+            "instance_type": "t3.micro",
+            "ipv6_address_count": 0,
+            "ipv6_addresses": [],
+            "key_name": "ansible-lab-key",
+            "launch_template": [],
+            "maintenance_options": [
+              {
+                "auto_recovery": "default"
+              }
+            ],
+            "metadata_options": [
+              {
+                "http_endpoint": "enabled",
+                "http_protocol_ipv6": "disabled",
+                "http_put_response_hop_limit": 1,
+                "http_tokens": "optional",
+                "instance_metadata_tags": "disabled"
+              }
+            ],
+            "monitoring": false,
+            "network_interface": [],
+            "outpost_arn": "",
+            "password_data": "",
+            "placement_group": "",
+            "placement_group_id": "",
+            "placement_partition_number": 0,
+            "primary_network_interface": [
+              {
+                "delete_on_termination": true,
+                "network_interface_id": "eni-083af1e5e4c9bf464"
+              }
+            ],
+            "primary_network_interface_id": "eni-083af1e5e4c9bf464",
+            "private_dns": "ip-10-0-2-12.ec2.internal",
+            "private_dns_name_options": [
+              {
+                "enable_resource_name_dns_a_record": false,
+                "enable_resource_name_dns_aaaa_record": false,
+                "hostname_type": "ip-name"
+              }
+            ],
+            "private_ip": "10.0.2.12",
+            "public_dns": "",
+            "public_ip": "",
+            "region": "us-east-1",
+            "root_block_device": [
+              {
+                "delete_on_termination": true,
+                "device_name": "/dev/sda1",
+                "encrypted": false,
+                "iops": 3000,
+                "kms_key_id": "",
+                "tags": {},
+                "tags_all": {},
+                "throughput": 125,
+                "volume_id": "vol-001ad349cc5dc97ed",
+                "volume_size": 10,
+                "volume_type": "gp3"
+              }
+            ],
+            "secondary_private_ips": [],
+            "security_groups": [],
+            "source_dest_check": true,
+            "spot_instance_request_id": "",
+            "subnet_id": "subnet-0046fe4cef6a023ad",
+            "tags": {
+              "Env": "dev",
+              "Name": "node2.example.com",
+              "Owner": "jose",
+              "Project": "ansible-lab",
+              "Role": "node"
+            },
+            "tags_all": {
+              "Env": "dev",
+              "Name": "node2.example.com",
+              "Owner": "jose",
+              "Project": "ansible-lab",
+              "Role": "node"
+            },
+            "tenancy": "default",
+            "timeouts": null,
+            "user_data": "#cloud-config\npackage_update: true\npackage_upgrade: false\npackages:\n  - python3\n  - openssh-server\n\nruncmd:\n  - hostnamectl set-hostname node2.example.com\n  - |\n    cat \u003e/etc/hosts \u003c\u003c'EOF'\n    127.0.0.1 localhost\n    10.0.1.10 control.example.com control\n    10.0.2.11 node1.example.com node1\n    10.0.2.12 node2.example.com node2\n    EOF\n  - systemctl restart ssh || true\n",
+            "user_data_base64": null,
+            "user_data_replace_on_change": false,
+            "volume_tags": null,
+            "vpc_security_group_ids": [
+              "sg-0e985d49618fe13c5"
+            ]
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "930816732860",
+            "id": "i-0b96f517dbaa9ffb6",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTIwMDAwMDAwMDAwMCwicmVhZCI6OTAwMDAwMDAwMDAwLCJ1cGRhdGUiOjYwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMiJ9",
+          "dependencies": [
+            "module.compute.aws_key_pair.lab_key",
+            "module.compute.data.aws_ami.ubuntu_2204",
+            "module.compute.tls_private_key.lab_key",
+            "module.network.aws_security_group.sg_control",
+            "module.network.aws_security_group.sg_nodes",
+            "module.network.aws_subnet.private_a",
+            "module.network.aws_vpc.lab"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.compute",
+      "mode": "managed",
+      "type": "aws_key_pair",
+      "name": "lab_key",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:930816732860:key-pair/ansible-lab-key",
+            "fingerprint": "K6KpyKLUxz3dBH3aJ9cCCNM5y7b6Z/3VDwe+5i1yyTo=",
+            "id": "ansible-lab-key",
+            "key_name": "ansible-lab-key",
+            "key_name_prefix": "",
+            "key_pair_id": "key-0c001400ba97971fb",
+            "key_type": "ed25519",
+            "public_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHqsSie4EyAGy+fobRlo2+uyASv2u0MzL94t5FZClea1",
+            "region": "us-east-1",
+            "tags": {},
+            "tags_all": {}
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.compute.tls_private_key.lab_key"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.compute",
+      "mode": "managed",
+      "type": "local_file",
+      "name": "write_private_key",
+      "provider": "provider[\"registry.terraform.io/hashicorp/local\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "content": "-----BEGIN PRIVATE KEY-----\nMC4CAQAwBQYDK2VwBCIEIBUk/drKhAr4Cvb7Dfs0xkZSshkJcvshrkpI/jh602vB\n-----END PRIVATE KEY-----\n",
+            "content_base64": null,
+            "content_base64sha256": "4Y4BECXTyY/9J3H6KaEpaNAKtzir1MrYA/QMzaei7xg=",
+            "content_base64sha512": "9WISJ2hVJYz2b9Ll1DDMDvXqbs1CQbtlAWR6UEUjAMDKT+Nelm7/Tzb11qTMQUSsy7gTnpjlBepNZbvjW92l+A==",
+            "content_md5": "f434547558f49278af1a9b1115d4bd04",
+            "content_sha1": "2579205e0b233d89ab54e683bd98fcc2ca40c093",
+            "content_sha256": "e18e011025d3c98ffd2771fa29a12968d00ab738abd4cad803f40ccda7a2ef18",
+            "content_sha512": "f56212276855258cf66fd2e5d430cc0ef5ea6ecd4241bb6501647a50452300c0ca4fe35e966eff4f36f5d6a4cc4144accbb8139e98e505ea4d65bbe35bdda5f8",
+            "directory_permission": "0777",
+            "file_permission": "0400",
+            "filename": "/home/kose117/.ssh/lab_key.pem",
+            "id": "2579205e0b233d89ab54e683bd98fcc2ca40c093",
+            "sensitive_content": null,
+            "source": null
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "content"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "sensitive_content"
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "dependencies": [
+            "module.compute.tls_private_key.lab_key"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.compute",
+      "mode": "managed",
+      "type": "null_resource",
+      "name": "ensure_generated_dir",
+      "provider": "provider[\"registry.terraform.io/hashicorp/null\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "4651345830830633169",
+            "triggers": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "module": "module.compute",
+      "mode": "managed",
+      "type": "tls_private_key",
+      "name": "lab_key",
+      "provider": "provider[\"registry.terraform.io/hashicorp/tls\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "algorithm": "ED25519",
+            "ecdsa_curve": "P224",
+            "id": "6821cf8bf2d88be48467e253f014b6b8208f1482",
+            "private_key_openssh": "-----BEGIN OPENSSH PRIVATE KEY-----\nb3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtz\nc2gtZWQyNTUxOQAAACB6rEonuBMgBsvn6G0ZaNvrsgEr9rtDMy/eLeRWQpXmtQAA\nAIiH4Axxh+AMcQAAAAtzc2gtZWQyNTUxOQAAACB6rEonuBMgBsvn6G0ZaNvrsgEr\n9rtDMy/eLeRWQpXmtQAAAEAVJP3ayoQK+Ar2+w37NMZGUrIZCXL7Ia5KSP44etNr\nwXqsSie4EyAGy+fobRlo2+uyASv2u0MzL94t5FZClea1AAAAAAECAwQF\n-----END OPENSSH PRIVATE KEY-----\n",
+            "private_key_pem": "-----BEGIN PRIVATE KEY-----\nMC4CAQAwBQYDK2VwBCIEIBUk/drKhAr4Cvb7Dfs0xkZSshkJcvshrkpI/jh602vB\n-----END PRIVATE KEY-----\n",
+            "private_key_pem_pkcs8": "-----BEGIN PRIVATE KEY-----\nMC4CAQAwBQYDK2VwBCIEIBUk/drKhAr4Cvb7Dfs0xkZSshkJcvshrkpI/jh602vB\n-----END PRIVATE KEY-----\n",
+            "public_key_fingerprint_md5": "b9:b1:bb:a2:e8:16:6d:bd:d9:61:99:fb:33:c9:3e:e2",
+            "public_key_fingerprint_sha256": "SHA256:K6KpyKLUxz3dBH3aJ9cCCNM5y7b6Z/3VDwe+5i1yyTo",
+            "public_key_openssh": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHqsSie4EyAGy+fobRlo2+uyASv2u0MzL94t5FZClea1\n",
+            "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAeqxKJ7gTIAbL5+htGWjb67IBK/a7QzMv3i3kVkKV5rU=\n-----END PUBLIC KEY-----\n",
+            "rsa_bits": 2048
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "private_key_openssh"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "private_key_pem"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "private_key_pem_pkcs8"
+              }
+            ]
+          ],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "module": "module.network",
+      "mode": "managed",
+      "type": "aws_eip",
+      "name": "nat",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "address": null,
+            "allocation_id": "eipalloc-0be4fd902b38113b8",
+            "arn": "arn:aws:ec2:us-east-1:930816732860:elastic-ip/eipalloc-0be4fd902b38113b8",
+            "associate_with_private_ip": null,
+            "association_id": "eipassoc-0f73be555866007f2",
+            "carrier_ip": "",
+            "customer_owned_ip": "",
+            "customer_owned_ipv4_pool": "",
+            "domain": "vpc",
+            "id": "eipalloc-0be4fd902b38113b8",
+            "instance": "",
+            "ipam_pool_id": null,
+            "network_border_group": "us-east-1",
+            "network_interface": "eni-0f4bf2ae7106ed084",
+            "private_dns": "ip-10-0-1-111.ec2.internal",
+            "private_ip": "10.0.1.111",
+            "ptr_record": "",
+            "public_dns": "ec2-52-20-229-170.compute-1.amazonaws.com",
+            "public_ip": "52.20.229.170",
+            "public_ipv4_pool": "amazon",
+            "region": "us-east-1",
+            "tags": {
+              "Env": "dev",
+              "Name": "ansible-lab-nat-eip",
+              "Owner": "jose",
+              "Project": "ansible-lab"
+            },
+            "tags_all": {
+              "Env": "dev",
+              "Name": "ansible-lab-nat-eip",
+              "Owner": "jose",
+              "Project": "ansible-lab"
+            },
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiZGVsZXRlIjoxODAwMDAwMDAwMDAsInJlYWQiOjkwMDAwMDAwMDAwMCwidXBkYXRlIjozMDAwMDAwMDAwMDB9fQ=="
+        }
+      ]
+    },
+    {
+      "module": "module.network",
+      "mode": "managed",
+      "type": "aws_internet_gateway",
+      "name": "lab",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:930816732860:internet-gateway/igw-07ffbeee110dd66fc",
+            "id": "igw-07ffbeee110dd66fc",
+            "owner_id": "930816732860",
+            "region": "us-east-1",
+            "tags": {
+              "Env": "dev",
+              "Name": "ansible-lab-igw",
+              "Owner": "jose",
+              "Project": "ansible-lab"
+            },
+            "tags_all": {
+              "Env": "dev",
+              "Name": "ansible-lab-igw",
+              "Owner": "jose",
+              "Project": "ansible-lab"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-03238609761723721"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAwLCJkZWxldGUiOjEyMDAwMDAwMDAwMDAsInVwZGF0ZSI6MTIwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "module.network.aws_vpc.lab"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.network",
+      "mode": "managed",
+      "type": "aws_nat_gateway",
+      "name": "nat",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "allocation_id": "eipalloc-0be4fd902b38113b8",
+            "association_id": "eipassoc-0f73be555866007f2",
+            "connectivity_type": "public",
+            "id": "nat-0fdb08540b0a1e1e3",
+            "network_interface_id": "eni-0f4bf2ae7106ed084",
+            "private_ip": "10.0.1.111",
+            "public_ip": "52.20.229.170",
+            "region": "us-east-1",
+            "secondary_allocation_ids": [],
+            "secondary_private_ip_address_count": 0,
+            "secondary_private_ip_addresses": [],
+            "subnet_id": "subnet-024354ab821c5e508",
+            "tags": {
+              "Env": "dev",
+              "Name": "ansible-lab-nat",
+              "Owner": "jose",
+              "Project": "ansible-lab"
+            },
+            "tags_all": {
+              "Env": "dev",
+              "Name": "ansible-lab-nat",
+              "Owner": "jose",
+              "Project": "ansible-lab"
+            },
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTgwMDAwMDAwMDAwMCwidXBkYXRlIjo2MDAwMDAwMDAwMDB9fQ==",
+          "dependencies": [
+            "module.network.aws_eip.nat",
+            "module.network.aws_internet_gateway.lab",
+            "module.network.aws_subnet.public_a",
+            "module.network.aws_vpc.lab"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.network",
+      "mode": "managed",
+      "type": "aws_route_table",
+      "name": "private",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:930816732860:route-table/rtb-0e6ce3becda656245",
+            "id": "rtb-0e6ce3becda656245",
+            "owner_id": "930816732860",
+            "propagating_vgws": [],
+            "region": "us-east-1",
+            "route": [
+              {
+                "carrier_gateway_id": "",
+                "cidr_block": "0.0.0.0/0",
+                "core_network_arn": "",
+                "destination_prefix_list_id": "",
+                "egress_only_gateway_id": "",
+                "gateway_id": "",
+                "ipv6_cidr_block": "",
+                "local_gateway_id": "",
+                "nat_gateway_id": "nat-0fdb08540b0a1e1e3",
+                "network_interface_id": "",
+                "transit_gateway_id": "",
+                "vpc_endpoint_id": "",
+                "vpc_peering_connection_id": ""
+              }
+            ],
+            "tags": {
+              "Env": "dev",
+              "Name": "ansible-lab-rt-private",
+              "Owner": "jose",
+              "Project": "ansible-lab"
+            },
+            "tags_all": {
+              "Env": "dev",
+              "Name": "ansible-lab-rt-private",
+              "Owner": "jose",
+              "Project": "ansible-lab"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-03238609761723721"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "930816732860",
+            "id": "rtb-0e6ce3becda656245",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "module.network.aws_eip.nat",
+            "module.network.aws_internet_gateway.lab",
+            "module.network.aws_nat_gateway.nat",
+            "module.network.aws_subnet.public_a",
+            "module.network.aws_vpc.lab"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.network",
+      "mode": "managed",
+      "type": "aws_route_table",
+      "name": "public",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:930816732860:route-table/rtb-00cc6a00236274f1a",
+            "id": "rtb-00cc6a00236274f1a",
+            "owner_id": "930816732860",
+            "propagating_vgws": [],
+            "region": "us-east-1",
+            "route": [
+              {
+                "carrier_gateway_id": "",
+                "cidr_block": "0.0.0.0/0",
+                "core_network_arn": "",
+                "destination_prefix_list_id": "",
+                "egress_only_gateway_id": "",
+                "gateway_id": "igw-07ffbeee110dd66fc",
+                "ipv6_cidr_block": "",
+                "local_gateway_id": "",
+                "nat_gateway_id": "",
+                "network_interface_id": "",
+                "transit_gateway_id": "",
+                "vpc_endpoint_id": "",
+                "vpc_peering_connection_id": ""
+              }
+            ],
+            "tags": {
+              "Env": "dev",
+              "Name": "ansible-lab-rt-public",
+              "Owner": "jose",
+              "Project": "ansible-lab"
+            },
+            "tags_all": {
+              "Env": "dev",
+              "Name": "ansible-lab-rt-public",
+              "Owner": "jose",
+              "Project": "ansible-lab"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-03238609761723721"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "930816732860",
+            "id": "rtb-00cc6a00236274f1a",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "module.network.aws_internet_gateway.lab",
+            "module.network.aws_vpc.lab"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.network",
+      "mode": "managed",
+      "type": "aws_route_table_association",
+      "name": "private_a",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "gateway_id": "",
+            "id": "rtbassoc-02b9b4d9bd943ee6e",
+            "region": "us-east-1",
+            "route_table_id": "rtb-0e6ce3becda656245",
+            "subnet_id": "subnet-0046fe4cef6a023ad",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "module.network.aws_eip.nat",
+            "module.network.aws_internet_gateway.lab",
+            "module.network.aws_nat_gateway.nat",
+            "module.network.aws_route_table.private",
+            "module.network.aws_subnet.private_a",
+            "module.network.aws_subnet.public_a",
+            "module.network.aws_vpc.lab"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.network",
+      "mode": "managed",
+      "type": "aws_route_table_association",
+      "name": "public_a",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "gateway_id": "",
+            "id": "rtbassoc-0677a819e16478027",
+            "region": "us-east-1",
+            "route_table_id": "rtb-00cc6a00236274f1a",
+            "subnet_id": "subnet-024354ab821c5e508",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "module.network.aws_internet_gateway.lab",
+            "module.network.aws_route_table.public",
+            "module.network.aws_subnet.public_a",
+            "module.network.aws_vpc.lab"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.network",
+      "mode": "managed",
+      "type": "aws_security_group",
+      "name": "sg_control",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:930816732860:security-group/sg-0a68c482b847bd915",
+            "description": "SSH from my IP to control; egress all",
+            "egress": [
+              {
+                "cidr_blocks": [
+                  "0.0.0.0/0"
+                ],
+                "description": "",
+                "from_port": 0,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "-1",
+                "security_groups": [],
+                "self": false,
+                "to_port": 0
+              }
+            ],
+            "id": "sg-0a68c482b847bd915",
+            "ingress": [
+              {
+                "cidr_blocks": [
+                  "181.61.246.245/32"
+                ],
+                "description": "SSH from my IP",
+                "from_port": 22,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "tcp",
+                "security_groups": [],
+                "self": false,
+                "to_port": 22
+              }
+            ],
+            "name": "ansible-lab-sg-control",
+            "name_prefix": "",
+            "owner_id": "930816732860",
+            "region": "us-east-1",
+            "revoke_rules_on_delete": false,
+            "tags": {
+              "Env": "dev",
+              "Name": "ansible-lab-sg-control",
+              "Owner": "jose",
+              "Project": "ansible-lab"
+            },
+            "tags_all": {
+              "Env": "dev",
+              "Name": "ansible-lab-sg-control",
+              "Owner": "jose",
+              "Project": "ansible-lab"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-03238609761723721"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "930816732860",
+            "id": "sg-0a68c482b847bd915",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6OTAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIxIn0=",
+          "dependencies": [
+            "module.network.aws_vpc.lab"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.network",
+      "mode": "managed",
+      "type": "aws_security_group",
+      "name": "sg_nodes",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:930816732860:security-group/sg-0e985d49618fe13c5",
+            "description": "Allow SSH only from control; egress all",
+            "egress": [
+              {
+                "cidr_blocks": [
+                  "0.0.0.0/0"
+                ],
+                "description": "",
+                "from_port": 0,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "-1",
+                "security_groups": [],
+                "self": false,
+                "to_port": 0
+              }
+            ],
+            "id": "sg-0e985d49618fe13c5",
+            "ingress": [
+              {
+                "cidr_blocks": [],
+                "description": "SSH from control SG",
+                "from_port": 22,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "tcp",
+                "security_groups": [
+                  "sg-0a68c482b847bd915"
+                ],
+                "self": false,
+                "to_port": 22
+              }
+            ],
+            "name": "ansible-lab-sg-nodes",
+            "name_prefix": "",
+            "owner_id": "930816732860",
+            "region": "us-east-1",
+            "revoke_rules_on_delete": false,
+            "tags": {
+              "Env": "dev",
+              "Name": "ansible-lab-sg-nodes",
+              "Owner": "jose",
+              "Project": "ansible-lab"
+            },
+            "tags_all": {
+              "Env": "dev",
+              "Name": "ansible-lab-sg-nodes",
+              "Owner": "jose",
+              "Project": "ansible-lab"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-03238609761723721"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "930816732860",
+            "id": "sg-0e985d49618fe13c5",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6OTAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIxIn0=",
+          "dependencies": [
+            "module.network.aws_security_group.sg_control",
+            "module.network.aws_vpc.lab"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.network",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "private_a",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:930816732860:subnet/subnet-0046fe4cef6a023ad",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "us-east-1a",
+            "availability_zone_id": "use1-az6",
+            "cidr_block": "10.0.2.0/24",
+            "customer_owned_ipv4_pool": "",
+            "enable_dns64": false,
+            "enable_lni_at_device_index": 0,
+            "enable_resource_name_dns_a_record_on_launch": false,
+            "enable_resource_name_dns_aaaa_record_on_launch": false,
+            "id": "subnet-0046fe4cef6a023ad",
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_id": "",
+            "ipv6_native": false,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": false,
+            "outpost_arn": "",
+            "owner_id": "930816732860",
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "region": "us-east-1",
+            "tags": {
+              "Env": "dev",
+              "Name": "ansible-lab-private-a",
+              "Owner": "jose",
+              "Project": "ansible-lab"
+            },
+            "tags_all": {
+              "Env": "dev",
+              "Name": "ansible-lab-private-a",
+              "Owner": "jose",
+              "Project": "ansible-lab"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-03238609761723721"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "930816732860",
+            "id": "subnet-0046fe4cef6a023ad",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTIwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMSJ9",
+          "dependencies": [
+            "module.network.aws_vpc.lab"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.network",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "public_a",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:930816732860:subnet/subnet-024354ab821c5e508",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "us-east-1a",
+            "availability_zone_id": "use1-az6",
+            "cidr_block": "10.0.1.0/24",
+            "customer_owned_ipv4_pool": "",
+            "enable_dns64": false,
+            "enable_lni_at_device_index": 0,
+            "enable_resource_name_dns_a_record_on_launch": false,
+            "enable_resource_name_dns_aaaa_record_on_launch": false,
+            "id": "subnet-024354ab821c5e508",
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_id": "",
+            "ipv6_native": false,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": true,
+            "outpost_arn": "",
+            "owner_id": "930816732860",
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "region": "us-east-1",
+            "tags": {
+              "Env": "dev",
+              "Name": "ansible-lab-public-a",
+              "Owner": "jose",
+              "Project": "ansible-lab"
+            },
+            "tags_all": {
+              "Env": "dev",
+              "Name": "ansible-lab-public-a",
+              "Owner": "jose",
+              "Project": "ansible-lab"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-03238609761723721"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "930816732860",
+            "id": "subnet-024354ab821c5e508",
+            "region": "us-east-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTIwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMSJ9",
+          "dependencies": [
+            "module.network.aws_vpc.lab"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.network",
+      "mode": "managed",
+      "type": "aws_vpc",
+      "name": "lab",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:930816732860:vpc/vpc-03238609761723721",
+            "assign_generated_ipv6_cidr_block": false,
+            "cidr_block": "10.0.0.0/16",
+            "default_network_acl_id": "acl-05aba9faa3f5f5e8e",
+            "default_route_table_id": "rtb-053e5ddb0edb3c995",
+            "default_security_group_id": "sg-0508321aba9789ec6",
+            "dhcp_options_id": "dopt-0adf519048cd6829b",
+            "enable_dns_hostnames": true,
+            "enable_dns_support": true,
+            "enable_network_address_usage_metrics": false,
+            "id": "vpc-03238609761723721",
+            "instance_tenancy": "default",
+            "ipv4_ipam_pool_id": null,
+            "ipv4_netmask_length": null,
+            "ipv6_association_id": "",
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_network_border_group": "",
+            "ipv6_ipam_pool_id": "",
+            "ipv6_netmask_length": 0,
+            "main_route_table_id": "rtb-053e5ddb0edb3c995",
+            "owner_id": "930816732860",
+            "region": "us-east-1",
+            "tags": {
+              "Env": "dev",
+              "Name": "ansible-lab-vpc",
+              "Owner": "jose",
+              "Project": "ansible-lab"
+            },
+            "tags_all": {
+              "Env": "dev",
+              "Name": "ansible-lab-vpc",
+              "Owner": "jose",
+              "Project": "ansible-lab"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ=="
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}

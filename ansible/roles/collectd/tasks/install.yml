@@ -1,0 +1,85 @@
+
+---
+
+- name: Install collectd package
+
+  apt:
+
+    name:
+
+      - collectd-core
+
+      - collectd
+
+    state: latest
+
+    update_cache: yes
+
+  become: yes
+
+  notify: restart collectd
+
+
+
+- name: Create collectd.d directory
+
+  file:
+
+    path: /etc/collectd/collectd.d
+
+    state: directory
+
+    mode: '0755'
+
+  become: yes
+
+
+
+- name: Enable collectd.d directory inclusion
+
+  lineinfile:
+
+    path: /etc/collectd/collectd.conf
+
+    line: 'Include "/etc/collectd/collectd.d/*.conf"'
+
+    state: present
+
+  become: yes
+
+  notify: restart collectd
+
+
+
+- name: Deploy prometheus plugin configuration
+
+  template:
+
+    src: prometheus.conf.j2
+
+    dest: /etc/collectd/collectd.d/prometheus.conf
+
+    owner: root
+
+    group: root
+
+    mode: '0644'
+
+  become: yes
+
+  notify: restart collectd
+
+
+
+- name: Ensure collectd service is enabled and started
+
+  systemd:
+
+    name: collectd
+
+    enabled: yes
+
+    state: started
+
+  become: yes
+
