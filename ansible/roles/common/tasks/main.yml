@@ -1,9 +1,8 @@
-
 ---
-
 - name: Include package installation tasks
-
   include_tasks: packages.yml
-
   when: install_packages | default(false) | bool
 
+- name: Include SELinux configuration tasks
+  include_tasks: selinux.yml
+  when: disable_selinux | default(false) | bool

@@ -1,0 +1,29 @@
+---
+- name: Check if SELinux is installed
+  stat:
+    path: /etc/selinux/config
+  register: selinux_config
+
+- name: Get current SELinux status
+  command: getenforce
+  register: selinux_status
+  changed_when: false
+  failed_when: false
+  when: selinux_config.stat.exists
+
+- name: Disable SELinux
+  selinux:
+    state: disabled
+  become: yes
+  register: selinux_disabled
+  when: 
+    - selinux_config.stat.exists
+    - selinux_status.stdout != "Disabled"
+  notify: reboot server
+
+- name: Set flag to skip reboot if SELinux already disabled
+  set_fact:
+    skip_reboot: true
+  when: 
+    - selinux_config.stat.exists
+    - selinux_status.stdout == "Disabled"
