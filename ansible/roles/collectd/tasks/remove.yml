@@ -1,0 +1,59 @@
+
+---
+
+- name: Stop collectd service
+
+  systemd:
+
+    name: collectd
+
+    state: stopped
+
+    enabled: no
+
+  become: yes
+
+  failed_when: false
+
+
+
+- name: Remove collectd packages
+
+  apt:
+
+    name:
+
+      - collectd
+
+      - collectd-core
+
+    state: absent
+
+    purge: yes
+
+  become: yes
+
+
+
+- name: Remove collectd configuration directory
+
+  file:
+
+    path: /etc/collectd
+
+    state: absent
+
+  become: yes
+
+
+
+- name: Remove collectd.d configuration directory
+
+  file:
+
+    path: /etc/collectd/collectd.d
+
+    state: absent
+
+  become: yes
+

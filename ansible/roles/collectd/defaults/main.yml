@@ -1,0 +1,25 @@
+
+---
+
+collectd_action: install
+
+collectd_port: 9103
+
+collectd_modules:
+
+  - df
+
+  - processes
+
+  - protocols
+
+  - swap
+
+  - tcpconns
+
+  - uptime
+
+  - users
+
+  - vmem
+

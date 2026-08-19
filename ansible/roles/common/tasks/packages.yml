@@ -1,0 +1,17 @@
+
+---
+
+- name: Install required packages
+
+  apt:
+
+    name: "{{ required_packages }}"
+
+    state: present
+
+    update_cache: yes
+
+  become: yes
+
+  when: required_packages is defined and required_packages | length > 0
+

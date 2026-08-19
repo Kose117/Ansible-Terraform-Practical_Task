@@ -1,0 +1,44 @@
+Ejecuta estos comandos en el control node, en orden:
+bash# 1. Configura /etc/hosts
+sudo tee -a /etc/hosts << 'EOF'
+10.0.1.10 control.example.com control
+10.0.2.11 node1.example.com node1
+10.0.2.12 node2.example.com node2
+EOF
+
+# 2. Genera la clave ED25519
+ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -N ""
+
+# 3. Obtén tu clave pública
+cat ~/.ssh/id_ed25519.pub
+Ahora sal del control (exit) y desde tu máquina local ejecuta:
+bash# 4. Copia la clave RSA al control
+CONTROL_IP=$(terraform output -raw control_public_ip)
+scp -i ./.generated/lab_key.pem ./.generated/lab_key.pem ubuntu@$CONTROL_IP:~/.ssh/temp_key.pem
+
+# 5. Vuelve a conectarte al control
+ssh -i ./.generated/lab_key.pem ubuntu@$CONTROL_IP
+Desde el control de nuevo:
+bash# 6. Copia la clave ED25519 a los nodos
+chmod 600 ~/.ssh/temp_key.pem
+
+for node_ip in 10.0.2.11 10.0.2.12; do
+  cat ~/.ssh/id_ed25519.pub | ssh -o StrictHostKeyChecking=no -i ~/.ssh/temp_key.pem ubuntu@$node_ip "mkdir -p ~/.ssh && chmod 700 ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
+done
+
+rm ~/.ssh/temp_key.pem
+
+# 7. Configura ~/.ssh/config
+cat > ~/.ssh/config << 'EOF'
+Host node*
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+  User ubuntu
+  IdentityFile ~/.ssh/id_ed25519
+EOF
+
+chmod 600 ~/.ssh/config
+
+# 8. Prueba
+ssh node1 hostname
+ssh node2 hostname

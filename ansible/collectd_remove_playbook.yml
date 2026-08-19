@@ -1,0 +1,17 @@
+
+---
+
+- name: Remove collectd service from managed nodes
+
+  hosts: managed_nodes
+
+  become: yes
+
+  vars:
+
+    collectd_action: remove
+
+  roles:
+
+    - collectd
+

@@ -1,0 +1,17 @@
+
+---
+
+- name: Include installation tasks
+
+  include_tasks: install.yml
+
+  when: collectd_action == "install"
+
+
+
+- name: Include removal tasks
+
+  include_tasks: remove.yml
+
+  when: collectd_action == "remove"
+

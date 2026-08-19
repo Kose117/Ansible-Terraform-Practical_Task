@@ -1,0 +1,37 @@
+#cloud-config
+package_update: true
+package_upgrade: false
+packages:
+  - python3
+  - python3-venv
+  - openssh-client
+
+runcmd:
+  - hostnamectl set-hostname ${hostname}
+  - |
+    cat >/etc/hosts <<'EOF'
+    127.0.0.1 localhost
+    ${control_ip} control.example.com control
+    ${node1_ip} node1.example.com node1
+    ${node2_ip} node2.example.com node2
+    EOF
+  - mkdir -p /home/${ssh_user}/.ssh
+  - chown ${ssh_user}:${ssh_user} /home/${ssh_user}/.ssh
+  - chmod 700 /home/${ssh_user}/.ssh
+  - |
+    cat >/home/${ssh_user}/.ssh/config <<'EOF'
+    Host node*
+      StrictHostKeyChecking no
+      UserKnownHostsFile /dev/null
+      User ${ssh_user}
+      IdentityFile /home/${ssh_user}/.ssh/id_ed25519
+    EOF
+  - chown ${ssh_user}:${ssh_user} /home/${ssh_user}/.ssh/config
+  - chmod 600 /home/${ssh_user}/.ssh/config
+  - |
+    cat >/home/${ssh_user}/.ssh/id_ed25519 <<'EOF'
+    ${private_key_pem}
+    EOF
+  - chown ${ssh_user}:${ssh_user} /home/${ssh_user}/.ssh/id_ed25519
+  - chmod 600 /home/${ssh_user}/.ssh/id_ed25519
+  - systemctl restart ssh || true

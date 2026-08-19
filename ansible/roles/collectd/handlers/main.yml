@@ -1,0 +1,13 @@
+
+---
+
+- name: restart collectd
+
+  systemd:
+
+    name: collectd
+
+    state: restarted
+
+  become: yes
+

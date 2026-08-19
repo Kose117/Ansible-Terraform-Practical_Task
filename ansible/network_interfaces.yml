@@ -1,0 +1,17 @@
+
+---
+
+- name: Print network interfaces for all VMs
+
+  hosts: managed_nodes
+
+  gather_facts: yes
+
+  tasks:
+
+    - name: Display network interfaces
+
+      debug:
+
+        msg: "Host {{ ansible_hostname }} has interfaces: {{ ansible_interfaces }}"
+

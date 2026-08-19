@@ -1,0 +1,9 @@
+  [frontend]
+  10.10.11.156
+
+  [backend]
+  10.10.13.57
+10.10.14.103
+
+  [all:vars]
+  ansible_user=ec2-user

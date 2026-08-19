@@ -1,0 +1,96 @@
+- hosts: backend
+  become: true
+  vars:
+    repo_url: https://github.com/Kose117/devops-rampup.git
+    app_dir: /opt/movie-analyst
+    api_dir: /opt/movie-analyst/movie-analyst-api
+    db_host: "movie-analyst-qa-mysql.codemik2wnef.us-east-1.rds.amazonaws.com"
+    db_user: "appuser"
+    db_name: "movie_db"
+    api_port: "80"
+  tasks:
+    - name: Ensure packages (reintentos)
+      shell: |
+        for i in $(seq 1 20); do dnf -y install nodejs git mariadb105 && exit 0 || sleep 15; done; exit 1
+
+    - name: Crear carpeta base
+      file:
+        path: "{{ app_dir }}"
+        state: directory
+        mode: '0755'
+
+    - name: Obtener repo
+      git:
+        repo: "{{ repo_url }}"
+        dest: "{{ app_dir }}"
+        version: HEAD
+        force: yes
+
+    - name: Instalar deps API (npm install)
+      shell: npm install --production --no-audit --no-fund
+      args:
+        chdir: "{{ api_dir }}"
+
+    - name: Cargar schema en RDS (idempotente)
+      shell: |
+        mysql -h "{{ db_host }}" -u "{{ db_user }}" -p"{{ db_pass }}" < "{{ api_dir }}/schema.sql"
+      args:
+        creates: "/var/lib/.schema_loaded"
+      register: schema_out
+      changed_when: schema_out.rc == 0
+      failed_when: false
+
+    - name: Marcar schema loaded
+      file:
+        path: /var/lib/.schema_loaded
+        state: touch
+        mode: '0644'
+
+    - name: Seed DB (idempotente)
+      shell: |
+        DB_HOST="{{ db_host }}" DB_USER="{{ db_user }}" DB_PASS="{{ db_pass }}" DB_NAME="{{ db_name }}" node "{{ api_dir }}/seeds.js"
+      args:
+        creates: "/var/lib/.seeds_loaded"
+      register: seeds_out
+      changed_when: seeds_out.rc == 0
+      failed_when: false
+
+    - name: Marcar seeds loaded
+      file:
+        path: /var/lib/.seeds_loaded
+        state: touch
+        mode: '0644'
+
+    - name: Systemd service para movie-analyst-api
+      copy:
+        dest: /etc/systemd/system/movie-analyst-api.service
+        mode: '0644'
+        content: |
+          [Unit]
+          Description=Movie Analyst API
+          After=network-online.target
+
+          [Service]
+          Type=simple
+          WorkingDirectory={{ api_dir }}
+          Environment=PORT={{ api_port }}
+          Environment=DB_HOST={{ db_host }}
+          Environment=DB_USER={{ db_user }}
+          Environment=DB_PASS={{ db_pass }}
+          Environment=DB_NAME={{ db_name }}
+          ExecStart=/usr/bin/node server.js
+          Restart=always
+          RestartSec=2
+          AmbientCapabilities=CAP_NET_BIND_SERVICE
+          CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+          NoNewPrivileges=true
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Recargar systemd y arrancar API
+      systemd:
+        daemon_reload: true
+        name: movie-analyst-api
+        state: restarted
+        enabled: true

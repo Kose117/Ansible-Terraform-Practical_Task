@@ -1,0 +1,37 @@
+
+---
+
+- name: Apply common role to all managed nodes
+
+  hosts: managed_nodes
+
+  become: yes
+
+  vars:
+
+    install_packages: true
+
+    required_packages:
+
+      - curl
+
+      - lsof
+
+      - mc
+
+      - nano
+
+      - tar
+
+      - unzip
+
+      - vim
+
+      - zip
+
+    disable_selinux: true
+
+  roles:
+
+    - common
+

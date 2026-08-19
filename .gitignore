@@ -1,0 +1,24 @@
+# Terraform state, providers, plans and crash files
+aws-terraform/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Keys and secrets
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local bundles
+*.zip
+
+# Ansible vault password (never commit)
+.vault_pass
